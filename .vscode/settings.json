@@ -1,0 +1,4 @@
+{
+    "editor.formatOnSaveTimeout": 5000,
+    "eslint.nodePath": "/Users/ntotten/.vscode/extensions/salesforce.salesforcedx-vscode-lwc-47.5.0/node_modules"
+}
