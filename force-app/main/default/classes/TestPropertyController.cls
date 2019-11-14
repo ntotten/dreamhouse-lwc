@@ -24,7 +24,8 @@ public class TestPropertyController {
             0
         );
         Test.stopTest();
-        System.assertEquals(5, properties.size());
+        Integer size = properties.size();
+        System.assertEquals(5, size);
     }
     static testMethod void testGetPagedPropertyList() {
         TestPropertyController.createProperties(5);
