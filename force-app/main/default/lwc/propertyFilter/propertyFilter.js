@@ -1,6 +1,8 @@
 import { LightningElement, wire, track } from 'lwc';
 import { CurrentPageReference } from 'lightning/navigation';
 import { fireEvent } from 'c/pubsub';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import PROPERTY_TYPE_FIELD from '@salesforce/schema/Property__c.Property_Type__c';
 
 const DELAY = 350;
 const MAX_PRICE = 1200000;
@@ -14,6 +16,12 @@ export default class PropertyFilter extends LightningElement {
 
     @track minBathrooms = 0;
 
+    @wire(getPicklistValues, {
+        recordTypeId: '012000000000000AAA',
+        fieldApiName: PROPERTY_TYPE_FIELD
+    })
+    picklistValues;
+
     @wire(CurrentPageReference) pageRef;
 
     handleReset() {
@@ -21,6 +29,7 @@ export default class PropertyFilter extends LightningElement {
         this.maxPrice = MAX_PRICE;
         this.minBedrooms = 0;
         this.minBathrooms = 0;
+        this.propertyType = 0;
         this.fireChangeEvent();
     }
 
@@ -44,6 +53,11 @@ export default class PropertyFilter extends LightningElement {
         this.fireChangeEvent();
     }
 
+    handlePropertyTypeChange(event) {
+        this.propertyType = event.detail.value;
+        this.fireChangeEvent();
+    }
+
     fireChangeEvent() {
         // Debouncing this method: Do not actually fire the event as long as this function is
         // being called within a delay of DELAY. This is to avoid a very large number of Apex
@@ -55,7 +69,8 @@ export default class PropertyFilter extends LightningElement {
                 searchKey: this.searchKey,
                 maxPrice: this.maxPrice,
                 minBedrooms: this.minBedrooms,
-                minBathrooms: this.minBathrooms
+                minBathrooms: this.minBathrooms,
+                propertyType: this.propertyType
             };
             fireEvent(this.pageRef, 'dreamhouse__filterChange', filters);
         }, DELAY);

@@ -13,6 +13,31 @@
                 value={searchKey}
                 onchange={handleSearchKeyChange}
             ></lightning-input>
+            <label class="slds-form-element__label slds-no-flex">
+                Property Type
+            </label>
+            <template if:true={picklistValues.data}>
+                <div class="slds-m-around_medium">
+                    <template
+                        for:each={picklistValues.data.values}
+                        for:item="item"
+                    >
+                        <lightning-input
+                            key={item.value}
+                            label={item.label}
+                            data-value={item.value}
+                            type="checkbox"
+                        >
+                        </lightning-input>
+                    </template>
+                </div>
+            </template>
+            <template if:true={picklistValues.error}>
+                <c-inline-message
+                    message="Error loading materials"
+                    errors={picklistValues.error}
+                ></c-inline-message>
+            </template>
             <lightning-slider
                 label="Max Price"
                 step="50000"
