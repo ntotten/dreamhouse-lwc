@@ -6,7 +6,7 @@
             onclick={handleReset}
         ></lightning-button>
 
-        <div class="slds-m-around_medium">
+        <section class="slds-m-around_medium slds-p-bottom_small">
             <lightning-input
                 label="Search Key"
                 type="text"
@@ -17,7 +17,7 @@
                 Property Type
             </label>
             <template if:true={picklistValues.data}>
-                <div class="slds-m-around_medium">
+                <div>
                     <template
                         for:each={picklistValues.data.values}
                         for:item="item"
@@ -27,6 +27,7 @@
                             label={item.label}
                             data-value={item.value}
                             type="checkbox"
+                            onchange={handlePropertyTypeChange}
                         >
                         </lightning-input>
                     </template>
@@ -62,6 +63,6 @@
                 value={minBathrooms}
                 onchange={handleMinBathroomsChange}
             ></lightning-slider>
-        </div>
+        </section>
     </lightning-card>
 </template>

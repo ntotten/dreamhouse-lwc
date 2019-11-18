@@ -29,7 +29,7 @@ export default class PropertyFilter extends LightningElement {
         this.maxPrice = MAX_PRICE;
         this.minBedrooms = 0;
         this.minBathrooms = 0;
-        this.propertyType = 0;
+        this.picklistValues = 0;
         this.fireChangeEvent();
     }
 
@@ -53,10 +53,11 @@ export default class PropertyFilter extends LightningElement {
         this.fireChangeEvent();
     }
 
-    handlePropertyTypeChange(event) {
-        this.propertyType = event.detail.value;
+    handlePropertyTypeChange = event => {
+        this.selections = event.detail.value;
+        console.log(this.picklistValues);
         this.fireChangeEvent();
-    }
+    };
 
     fireChangeEvent() {
         // Debouncing this method: Do not actually fire the event as long as this function is
@@ -70,8 +71,9 @@ export default class PropertyFilter extends LightningElement {
                 maxPrice: this.maxPrice,
                 minBedrooms: this.minBedrooms,
                 minBathrooms: this.minBathrooms,
-                propertyType: this.propertyType
+                picklistValues: this.picklistValues
             };
+
             fireEvent(this.pageRef, 'dreamhouse__filterChange', filters);
         }, DELAY);
     }
